@@ -1,0 +1,114 @@
+
+/* Font */
+
+@font-face {
+	font-family: 'Genshin';
+	src: url('./assets/Genshin-Impact-Font.ttf');
+}
+
+/* General styles */
+
+:root {
+  --beige: rgb(255, 238, 204);
+  --light-brown: rgb(167, 127, 103);
+  --brown: rgb(105, 80, 80);
+  --dark-brown: rgb(70, 49, 48);
+  --rust: rgb(152, 64, 27);
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	min-height: 100svh;
+	margin: 0;
+	padding: 0;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+	background-color: var(--beige);
+	overflow-x: clip;
+}
+
+header, main, footer {
+  width: 100%;
+  display: flex;
+}
+
+a {
+  text-decoration: wavy;
+  color: var(--rust);
+  transition: color ease-in-out 0.4s;
+}
+
+a:hover {
+  color: var(--light-brown);
+}
+
+/* Header */
+
+header {
+  justify-content: space-evenly;
+}
+
+h1 {
+  margin: 0.7rem;
+  padding: 1rem;
+
+  width: 100%;
+
+  border: solid 0.2rem var(--brown);
+  border-radius: 1rem;
+
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+/* Main */
+
+/* Footer */
+
+footer {
+
+}
+
+.footer-div {
+  margin: 0.7rem;
+  padding: 0.7rem 1rem;
+
+  width: 100%;
+
+  border: solid 0.2rem var(--brown);
+  border-radius: 1rem;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.github-credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.github-credit p {
+  margin: 0.2rem;
+  font-size: 0.7rem;
+}
+
+.github-paragraph {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.rss-link {
+  display: flex;
+}
