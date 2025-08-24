@@ -8,9 +8,29 @@ const loses = 0;
 // Generation of the Page content
 
 const header = document.createElement('header');
-  const h1 = document.createElement('h1');
-  h1.textContent = 'Not a Fight Club';
-header.appendChild(h1);
+  const headerDiv = document.createElement('div');
+  headerDiv.classList.add('header-div');
+    const h1 = document.createElement('h1');
+    h1.textContent = 'Not a Fight Club';
+
+    const nav = document.createElement('nav');
+      const battleBtn = document.createElement('button');
+      battleBtn.classList.add('nav-btn', 'battle');
+      battleBtn.addEventListener('click', battlePage());
+
+      const profileBtn = document.createElement('button');
+      profileBtn.classList.add('nav-btn', 'profile');
+      profileBtn.addEventListener('click', profilePage());
+
+      const editBtn = document.createElement('button');
+      editBtn.classList.add('nav-btn', 'edit');
+      editBtn.addEventListener('click', edit());
+    nav.appendChild(battleBtn);
+    nav.appendChild(profileBtn);
+    nav.appendChild(editBtn);
+  headerDiv.appendChild(h1);
+  headerDiv.appendChild(nav);
+header.appendChild(headerDiv);
 
 const main = document.createElement('main');
 
@@ -57,4 +77,12 @@ footer.appendChild(footerDiv);
 document.body.appendChild(header);
 document.body.appendChild(main);
 document.body.appendChild(footer);
+
+/* Functionality */
+
+function battlePage() {}
+
+function profilePage() {}
+
+function edit() {}
 
