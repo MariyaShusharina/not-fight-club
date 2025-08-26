@@ -114,8 +114,20 @@ const main = document.createElement('main');
 
       const playerName = document.createElement('p');
       playerName.textContent = `Player name: ${data.charName}`;
-      settingsPage.appendChild(settingsH2);
+
+      const editBtn = document.createElement('button');
+      editBtn.classList.add('btn');
+      editBtn.textContent = 'Edit';
+      editBtn.addEventListener('click', editName);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.classList.add('btn');
+      deleteBtn.textContent = 'Delete Data';
+      deleteBtn.addEventListener('click', deleteData);
+    settingsPage.appendChild(settingsH2);
     settingsPage.appendChild(playerName);
+    settingsPage.appendChild(editBtn);
+    settingsPage.appendChild(deleteBtn);
   mainDiv.appendChild(regPage);
   mainDiv.appendChild(battlePage);
   mainDiv.appendChild(profilePage);
@@ -175,6 +187,13 @@ if (data.charName !== '') {
 
 /* Navigation */
 
+function loadRegPage() {
+  regPage.classList.remove('hid');
+  battlePage.classList.add('hid');
+  profilePage.classList.add('hid');
+  settingsPage.classList.add('hid');
+}
+
 function loadBattlePage() {
   regPage.classList.add('hid');
   battlePage.classList.remove('hid');
@@ -205,13 +224,20 @@ function createCharacter() {
   if (val.length > 1 && val.length < 41) {
     data.charName = val;
     writeLS(data);
-    loadBattlePage;
+    loadBattlePage();
   } else {
     throwDialogError('Error: Invalid Character Name!');
   }
 }
 
 function startBattle() {}
+
+function editName() {}
+
+function deleteData() {
+  removeLS();
+  loadRegPage();
+}
 
 /* Error Dialog functionality */
 
@@ -235,6 +261,12 @@ function getLS() {
     data = JSON.parse(localStorage.getItem('NotGenshinClub'));
   } else {
     writeLS(data);
+  }
+}
+
+function removeLS() {
+  if (localStorage.NotGenshinClub) {
+    localStorage.removeItem('NotGenshinClub');
   }
 }
 
