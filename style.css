@@ -152,7 +152,9 @@ main {
 }
 
 .reg-div,
-.battle-div {
+.battle-div,
+.profile-div,
+.settings-div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -189,6 +191,14 @@ input[type='text'] {
 
 .btn:hover {
   background-color: var(--light-brown);
+}
+
+.profile-div {
+  margin-bottom: 1rem;
+}
+
+.character-pic {
+  max-height: 300px;
 }
 
 /* Footer */

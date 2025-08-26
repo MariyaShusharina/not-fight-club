@@ -47,7 +47,7 @@ const header = document.createElement('header');
 
       const editBtn = document.createElement('button');
       editBtn.classList.add('nav-btn', 'edit');
-      editBtn.addEventListener('click', edit);
+      editBtn.addEventListener('click', loadSettingsPage);
     nav.appendChild(battleBtn);
     nav.appendChild(profileBtn);
     nav.appendChild(editBtn);
@@ -93,8 +93,33 @@ const main = document.createElement('main');
       fightBtn.addEventListener('click', startBattle);
     battlePage.appendChild(battleH2);
     battlePage.appendChild(fightBtn);
+
+    const profilePage = document.createElement('div');
+    profilePage.classList.add('profile-div', 'hid');
+      const profileH2 = document.createElement('h2');
+      profileH2.textContent = 'Character profile';
+      
+      const avatar1 = document.createElement('img');
+      avatar1.classList.add('character-pic');
+      avatar1.setAttribute('src', './assets/chars/Alhaitham.png');
+      avatar1.setAttribute('alt', 'Character Picture');
+
+    profilePage.appendChild(profileH2);
+    profilePage.appendChild(avatar1);
+
+    const settingsPage = document.createElement('div');
+    settingsPage.classList.add('settings-div', 'hid');
+      const settingsH2 = document.createElement('h2');
+      settingsH2.textContent = 'Settings';
+
+      const playerName = document.createElement('p');
+      playerName.textContent = `Player name: ${data.charName}`;
+      settingsPage.appendChild(settingsH2);
+    settingsPage.appendChild(playerName);
   mainDiv.appendChild(regPage);
   mainDiv.appendChild(battlePage);
+  mainDiv.appendChild(profilePage);
+  mainDiv.appendChild(settingsPage);
 main.appendChild(mainDiv);
 
 const footer = document.createElement('footer');
@@ -151,11 +176,28 @@ if (data.charName !== '') {
 
 /* Navigation */
 
-function loadBattlePage() {}
+function loadBattlePage() {
+  regPage.classList.add('hid');
+  battlePage.classList.remove('hid');
+  profilePage.classList.add('hid');
+  settingsPage.classList.add('hid');
+}
 
-function loadProfilePage() {}
+function loadProfilePage() {
+  regPage.classList.add('hid');
+  battlePage.classList.add('hid');
+  profilePage.classList.remove('hid');
+  settingsPage.classList.add('hid');
+}
 
-function edit() {}
+function loadSettingsPage() {
+  regPage.classList.add('hid');
+  battlePage.classList.add('hid');
+  profilePage.classList.add('hid');
+  settingsPage.classList.remove('hid');
+
+  playerName.textContent = `Player name: ${data.charName}`;
+}
 
 /* Functionality */
 
