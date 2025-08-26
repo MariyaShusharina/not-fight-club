@@ -45,12 +45,12 @@ const header = document.createElement('header');
       profileBtn.classList.add('nav-btn', 'profile');
       profileBtn.addEventListener('click', loadProfilePage);
 
-      const editBtn = document.createElement('button');
-      editBtn.classList.add('nav-btn', 'edit');
-      editBtn.addEventListener('click', loadSettingsPage);
+      const settingsBtn = document.createElement('button');
+      settingsBtn.classList.add('nav-btn', 'edit');
+      settingsBtn.addEventListener('click', loadSettingsPage);
     nav.appendChild(battleBtn);
     nav.appendChild(profileBtn);
-    nav.appendChild(editBtn);
+    nav.appendChild(settingsBtn);
   headerDiv.appendChild(h1);
   headerDiv.appendChild(nav);
 header.appendChild(headerDiv);
@@ -170,8 +170,7 @@ document.body.appendChild(footer);
 
 getLS();
 if (data.charName !== '') {
-  regPage.classList.add('hid');
-  battlePage.classList.remove('hid');
+  loadBattlePage();
 }
 
 /* Navigation */
@@ -206,8 +205,7 @@ function createCharacter() {
   if (val.length > 1 && val.length < 41) {
     data.charName = val;
     writeLS(data);
-    regPage.classList.add('hid');
-    battlePage.classList.remove('hid');
+    loadBattlePage;
   } else {
     throwDialogError('Error: Invalid Character Name!');
   }

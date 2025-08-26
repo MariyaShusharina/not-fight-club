@@ -9,13 +9,13 @@
 /* General styles */
 
 :root {
-  --white: rgb(255, 255, 255);
-  --beige: rgb(255, 238, 204);
-  --light-brown: rgb(167, 127, 103);
-  --haselnut: rgb(134, 93, 68);
-  --brown: rgb(105, 80, 80);
-  --dark-brown: rgb(70, 49, 48);
-  --rust: rgb(152, 64, 27);
+  --white: rgb(255 255 255);
+  --beige: rgb(255 238 204);
+  --light-brown: rgb(167 127 103);
+  --haselnut: rgb(134 93 68);
+  --brown: rgb(105 80 80);
+  --dark-brown: rgb(70 49 48);
+  --rust: rgb(152 64 27);
 }
 
 html {
