@@ -39,11 +39,11 @@ const header = document.createElement('header');
     const nav = document.createElement('nav');
       const battleBtn = document.createElement('button');
       battleBtn.classList.add('nav-btn', 'battle');
-      battleBtn.addEventListener('click', battlePage);
+      battleBtn.addEventListener('click', loadBattlePage);
 
       const profileBtn = document.createElement('button');
       profileBtn.classList.add('nav-btn', 'profile');
-      profileBtn.addEventListener('click', profilePage);
+      profileBtn.addEventListener('click', loadProfilePage);
 
       const editBtn = document.createElement('button');
       editBtn.classList.add('nav-btn', 'edit');
@@ -81,7 +81,20 @@ const main = document.createElement('main');
     regPage.appendChild(regLabel);
     regPage.appendChild(regInput);
     regPage.appendChild(regBtn);
+
+    const battlePage = document.createElement('div');
+    battlePage.classList.add('battle-div', 'hid');
+      const battleH2 = document.createElement('h2');
+      battleH2.textContent = 'Start the battle!';
+
+      const fightBtn = document.createElement('button');
+      fightBtn.classList.add('btn');
+      fightBtn.textContent = 'Fight!';
+      fightBtn.addEventListener('click', startBattle);
+    battlePage.appendChild(battleH2);
+    battlePage.appendChild(fightBtn);
   mainDiv.appendChild(regPage);
+  mainDiv.appendChild(battlePage);
 main.appendChild(mainDiv);
 
 const footer = document.createElement('footer');
@@ -133,13 +146,14 @@ document.body.appendChild(footer);
 getLS();
 if (data.charName !== '') {
   regPage.classList.add('hid');
+  battlePage.classList.remove('hid');
 }
 
 /* Navigation */
 
-function battlePage() {}
+function loadBattlePage() {}
 
-function profilePage() {}
+function loadProfilePage() {}
 
 function edit() {}
 
@@ -151,10 +165,13 @@ function createCharacter() {
     data.charName = val;
     writeLS(data);
     regPage.classList.add('hid');
+    battlePage.classList.remove('hid');
   } else {
     throwDialogError('Error: Invalid Character Name!');
   }
 }
+
+function startBattle() {}
 
 /* Error Dialog functionality */
 
