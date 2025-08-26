@@ -9,8 +9,10 @@
 /* General styles */
 
 :root {
+  --white: rgb(255, 255, 255);
   --beige: rgb(255, 238, 204);
   --light-brown: rgb(167, 127, 103);
+  --haselnut: rgb(134, 93, 68);
   --brown: rgb(105, 80, 80);
   --dark-brown: rgb(70, 49, 48);
   --rust: rgb(152, 64, 27);
@@ -18,10 +20,12 @@
 
 html {
 	scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
 	min-height: 100svh;
+  height: 100%;
 	margin: 0;
 	padding: 0;
 	
@@ -128,6 +132,64 @@ nav {
 
 /* Main */
 
+main {
+  height: 100%;
+}
+
+.main-div {
+  margin: 0 0.7rem;
+  padding: 0.8rem;
+
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: solid 0.2rem var(--brown);
+  border-radius: 1rem;
+}
+
+.reg-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+input[type='text'] {
+  padding: 0.1rem 0.2rem;
+  appearance: none;
+  border: 0.15rem solid var(--brown);
+  border-radius: 0.3rem;
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+}
+
+.btn {
+  cursor: pointer;
+
+  margin: 0.3rem;
+  padding: 0.5rem 0.7rem;
+
+  width: fit-content;
+
+  appearance: none;
+  border: none;
+  border-radius: 0.5rem;
+
+  font-family: 'Genshin', serif;
+  color: var(--white);
+  background-color: var(--brown);
+
+  transition: background-color 0.4s ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--light-brown);
+}
+
 /* Footer */
 
 footer {}
@@ -170,4 +232,28 @@ footer {}
 
 .rss-link:hover {
   transform: scale(1.15);
+}
+
+/* Error Dialog */
+
+.error-dialog[open] {
+  margin: auto;
+  padding: 1rem;
+
+  border: 0.2rem solid var(--brown);
+  border-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+
+  background-color: var(--beige);
+}
+
+.hid {
+  display: none;
 }
