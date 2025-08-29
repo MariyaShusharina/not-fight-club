@@ -102,7 +102,7 @@ const main = document.createElement('main');
     regPage.appendChild(regBtn);
 
     const battlePage = document.createElement('div');
-    battlePage.classList.add('column-div', 'hid');
+    battlePage.classList.add('column-div');
       const battleH2 = document.createElement('h2');
       battleH2.textContent = 'Start the battle!';
 
@@ -113,8 +113,14 @@ const main = document.createElement('main');
     battlePage.appendChild(battleH2);
     battlePage.appendChild(fightBtn);
 
+    const arenaPage = document.createElement('div');
+    arenaPage.classList.add('column-div');
+      const arenaH2 = document.createElement('h2');
+      arenaH2.textContent = 'Arena';
+    arenaPage.appendChild(arenaH2);
+
     const profilePage = document.createElement('div');
-    profilePage.classList.add('profile-div', 'hid');
+    profilePage.classList.add('profile-div');
       const profileH2 = document.createElement('h2');
       profileH2.textContent = 'Character profile';
 
@@ -195,7 +201,7 @@ const main = document.createElement('main');
     profilePage.appendChild(charDiv);
 
     const settingsPage = document.createElement('div');
-    settingsPage.classList.add('settings-div', 'hid');
+    settingsPage.classList.add('settings-div');
       const settingsH2 = document.createElement('h2');
       settingsH2.textContent = 'Settings';
 
@@ -238,7 +244,7 @@ const main = document.createElement('main');
     settingsPage.appendChild(deleteBtn);
 
     const error404Page = document.createElement('div');
-    error404Page.classList.add('column-div', 'hid');
+    error404Page.classList.add('column-div');
       const error404h2 = document.createElement('h2');
       error404h2.textContent = 'Error 404!';
 
@@ -254,6 +260,7 @@ const main = document.createElement('main');
     error404Page.appendChild(error404btn);
   mainDiv.appendChild(regPage);
   mainDiv.appendChild(battlePage);
+  mainDiv.appendChild(arenaPage);
   mainDiv.appendChild(profilePage);
   mainDiv.appendChild(settingsPage);
   mainDiv.appendChild(error404Page);
@@ -305,44 +312,49 @@ document.body.appendChild(footer);
 
 /* Onload functionality */
 
-getLS();
+checkLS();
 if (data.charName !== '') {
   loadBattlePage();
+} else {
+  loadRegPage();
 }
 
 /* Navigation */
 
 function loadRegPage() {
-  checkLS();
+  getLS();
   if (data.charName === '') {
-    regPage.classList.remove('hid');
+    mainDiv.textContent = '';
+    mainDiv.appendChild(regPage);
     regInput.value = '';
-    battlePage.classList.add('hid');
-    profilePage.classList.add('hid');
-    settingsPage.classList.add('hid');
-    error404Page.classList.add('hid');
   }
 }
 
 function loadBattlePage() {
-  checkLS();
+  getLS();
   if (data.charName !== '') {
-    regPage.classList.add('hid');
-    battlePage.classList.remove('hid');
-    profilePage.classList.add('hid');
-    settingsPage.classList.add('hid');
+    mainDiv.textContent = '';
+    mainDiv.appendChild(battlePage);;
+  } else {
+    loadError404Page();
+  }
+}
+
+function loadArenaPage() {
+  getLS();
+  if (data.charName !== '') {
+    mainDiv.textContent = '';
+    mainDiv.appendChild(arenaPage);;
   } else {
     loadError404Page();
   }
 }
 
 function loadProfilePage() {
-  checkLS();
+  getLS();
   if (data.charName !== '') {
-    regPage.classList.add('hid');
-    battlePage.classList.add('hid');
-    profilePage.classList.remove('hid');
-    settingsPage.classList.add('hid');
+    mainDiv.textContent = '';
+    mainDiv.appendChild(profilePage);
 
     profileName.textContent = data.charName;
     avatar.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
@@ -352,12 +364,10 @@ function loadProfilePage() {
 }
 
 function loadSettingsPage() {
-  checkLS();
+  getLS();
   if (data.charName !== '') {
-    regPage.classList.add('hid');
-    battlePage.classList.add('hid');
-    profilePage.classList.add('hid');
-    settingsPage.classList.remove('hid');
+    mainDiv.textContent = '';
+    mainDiv.appendChild(settingsPage);
   
     playerName.textContent = data.charName;
     playerName.classList.remove('hid');
@@ -368,13 +378,10 @@ function loadSettingsPage() {
 }
 
 function loadError404Page() {
-  checkLS();
+  getLS();
   if (data.charName === '') {
-    regPage.classList.add('hid');
-    battlePage.classList.add('hid');
-    profilePage.classList.add('hid');
-    settingsPage.classList.add('hid');
-    error404Page.classList.remove('hid');
+    mainDiv.textContent = '';
+    mainDiv.appendChild(error404Page);
   }
 }
 
@@ -391,14 +398,18 @@ function createCharacter() {
   }
 }
 
-function startBattle() {}
+function startBattle() {
+  getLS();
+  //check if battle started
+  //restore battle or
+  //init battle and generate random enemy;
+  loadArenaPage();
+}
 
 function updateAvatar() {
   val = selectAvatar.selectedIndex;
   if (val !== '') {
     data.avatar = parseInt(val);
-    console.log(data.avatar);
-    console.log(data);
     writeLS(data);
     avatar.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
   }
@@ -440,6 +451,9 @@ function deleteData() {
   okErrorBtn.classList.add('hid');
   removeLS();
   data.charName = '';
+  data.avatar = 0;
+  data.wins = 0;
+  data.loses = 0;
   closeDialog()
   loadRegPage();
 }
@@ -461,7 +475,7 @@ function writeLS(val) {
   localStorage.setItem('NotGenshinClub', JSON.stringify(val));
 }
 
-function getLS() {
+function checkLS() {
   if (localStorage.NotGenshinClub) {
     data = JSON.parse(localStorage.getItem('NotGenshinClub'));
   } else {
@@ -469,7 +483,7 @@ function getLS() {
   }
 }
 
-function checkLS() {
+function getLS() {
   if (localStorage.NotGenshinClub) {
     data = JSON.parse(localStorage.getItem('NotGenshinClub'));
   }
