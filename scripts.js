@@ -1,9 +1,12 @@
 
 /* Variables */
 
-const charName = '';
-const wins = 0;
-const loses = 0;
+const chars = [
+  'Alhaitham',
+  'Arlecchino',
+  'Furina',
+  'Zhongli'
+];
 
 /* Data Object */
 
@@ -55,7 +58,7 @@ const header = document.createElement('header');
       profileBtn.addEventListener('click', loadProfilePage);
 
       const settingsBtn = document.createElement('button');
-      settingsBtn.classList.add('nav-btn', 'edit');
+      settingsBtn.classList.add('nav-btn', 'settings');
       settingsBtn.addEventListener('click', loadSettingsPage);
     nav.appendChild(battleBtn);
     nav.appendChild(profileBtn);
@@ -69,7 +72,7 @@ const main = document.createElement('main');
   mainDiv.classList.add('main-div');
     const regPage = document.createElement('form');
     regPage.setAttribute('action', 'javascript:void(0)');
-    regPage.classList.add('reg-div');
+    regPage.classList.add('column-div');
     regPage.setAttribute('name', 'charname');
       const regH2 = document.createElement('h2');
       regH2.textContent = 'Create your character';
@@ -99,7 +102,7 @@ const main = document.createElement('main');
     regPage.appendChild(regBtn);
 
     const battlePage = document.createElement('div');
-    battlePage.classList.add('battle-div', 'hid');
+    battlePage.classList.add('column-div', 'hid');
       const battleH2 = document.createElement('h2');
       battleH2.textContent = 'Start the battle!';
 
@@ -114,14 +117,82 @@ const main = document.createElement('main');
     profilePage.classList.add('profile-div', 'hid');
       const profileH2 = document.createElement('h2');
       profileH2.textContent = 'Character profile';
-      
-      const avatar1 = document.createElement('img');
-      avatar1.classList.add('character-pic');
-      avatar1.setAttribute('src', './assets/chars/Alhaitham.png');
-      avatar1.setAttribute('alt', 'Character Picture');
 
+      const charDiv = document.createElement('div');
+      charDiv.classList.add('char-div');
+        const avatar = document.createElement('img');
+        avatar.classList.add('character-pic');
+        avatar.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
+        avatar.setAttribute('alt', 'Character Picture');
+
+        const descriptionDiv = document.createElement('div');
+        descriptionDiv.classList.add('description-div');
+          const profileName = document.createElement('p');
+          profileName.textContent = data.charName;
+
+          const resultsDiv = document.createElement('div');
+          resultsDiv.classList.add('results-div');
+            const winsDiv = document.createElement('div');
+            winsDiv.classList.add('wins-loses-div');
+              const winsPar = document.createElement('p');
+              winsPar.classList.add('wins');
+              winsPar.textContent = 'Wins:';
+
+              const winsNum = document.createElement('p');
+              winsNum.classList.add('wins');
+              winsNum.textContent = data.wins;
+            winsDiv.appendChild(winsPar);
+            winsDiv.appendChild(winsNum);
+
+            const losesDiv = document.createElement('div');
+            losesDiv.classList.add('wins-loses-div');
+              const losesPar = document.createElement('p');
+              losesPar.classList.add('loses');
+              losesPar.textContent = 'Loses:';
+
+              const losesNum = document.createElement('p');
+              losesNum.classList.add('loses');
+              losesNum.textContent = data.loses;
+            losesDiv.appendChild(losesPar);
+            losesDiv.appendChild(losesNum);
+          resultsDiv.appendChild(winsDiv);
+          resultsDiv.appendChild(losesDiv);
+
+          const selectAvatar = document.createElement('select');
+          selectAvatar.addEventListener('change', updateAvatar);
+            const optionDefault = document.createElement('option');
+            optionDefault.setAttribute('value', '');
+            optionDefault.setAttribute('disabled', true);
+            optionDefault.setAttribute('selected', true);
+            optionDefault.textContent = 'Change character';
+
+            const option0 = document.createElement('option');
+            option0.setAttribute('value', 0);
+            option0.textContent = 'Alhaitham';
+
+            const option1 = document.createElement('option');
+            option1.setAttribute('value', 1);
+            option1.textContent = 'Arlecchino';
+
+            const option2 = document.createElement('option');
+            option2.setAttribute('value', 2);
+            option2.textContent = 'Furina';
+
+            const option3 = document.createElement('option');
+            option3.setAttribute('value', 3);
+            option3.textContent = 'Zhongli';
+          selectAvatar.appendChild(option0);
+          selectAvatar.appendChild(option1);
+          selectAvatar.appendChild(option2);
+          selectAvatar.appendChild(option3);
+          selectAvatar.appendChild(optionDefault);
+        descriptionDiv.appendChild(profileName);
+        descriptionDiv.appendChild(resultsDiv);
+        descriptionDiv.appendChild(selectAvatar);
+      charDiv.appendChild(avatar);
+      charDiv.appendChild(descriptionDiv);
     profilePage.appendChild(profileH2);
-    profilePage.appendChild(avatar1);
+    profilePage.appendChild(charDiv);
 
     const settingsPage = document.createElement('div');
     settingsPage.classList.add('settings-div', 'hid');
@@ -167,7 +238,7 @@ const main = document.createElement('main');
     settingsPage.appendChild(deleteBtn);
 
     const error404Page = document.createElement('div');
-    error404Page.classList.add('error-404-div', 'hid');
+    error404Page.classList.add('column-div', 'hid');
       const error404h2 = document.createElement('h2');
       error404h2.textContent = 'Error 404!';
 
@@ -272,6 +343,9 @@ function loadProfilePage() {
     battlePage.classList.add('hid');
     profilePage.classList.remove('hid');
     settingsPage.classList.add('hid');
+
+    profileName.textContent = data.charName;
+    avatar.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
   } else {
     loadError404Page();
   }
@@ -286,7 +360,7 @@ function loadSettingsPage() {
     settingsPage.classList.remove('hid');
   
     playerName.textContent = data.charName;
-    playerName.classListremove('hid');
+    playerName.classList.remove('hid');
     nameInputDiv.classList.add('hid');
   } else {
     loadError404Page();
@@ -319,6 +393,17 @@ function createCharacter() {
 
 function startBattle() {}
 
+function updateAvatar() {
+  val = selectAvatar.selectedIndex;
+  if (val !== '') {
+    data.avatar = parseInt(val);
+    console.log(data.avatar);
+    console.log(data);
+    writeLS(data);
+    avatar.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
+  }
+}
+
 function editName() {
   playerName.classList.add('hid');
   editBtn.classList.add('hid');
@@ -336,6 +421,7 @@ function changeName() {
     data.charName = val;
     writeLS(data);
     playerName.textContent = data.charName;
+    profileName.textContent = data.charName;
   } else {
     throwDialogError('Error: Invalid Character Name!');
   }
