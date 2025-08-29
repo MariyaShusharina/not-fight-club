@@ -16,10 +16,12 @@
   --brown: rgb(105 80 80);
   --dark-brown: rgb(70 49 48);
   --rust: rgb(152 64 27);
+  --red: rgb(185 0 0);
 }
 
 html {
 	scroll-behavior: smooth;
+  scrollbar-gutter: stable;
   height: 100%;
 }
 
@@ -154,7 +156,8 @@ main {
 .reg-div,
 .battle-div,
 .profile-div,
-.settings-div {
+.settings-div,
+.error-404-div {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -199,6 +202,34 @@ input[type='text'] {
 
 .character-pic {
   max-height: 300px;
+}
+
+.player-name-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-name-p {
+  margin: 0.2rem 0;
+}
+
+.name-input-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.delete-btn {
+  margin: 1.2rem 0;
+  background-color: var(--rust);
+  transition: background-color 0.4s ease-in-out;
+}
+
+.delete-btn:hover {
+  background-color: var(--red);
 }
 
 /* Footer */
@@ -264,6 +295,21 @@ footer {}
 
   background-color: var(--beige);
 }
+
+.dialg-btns-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.error-dialog::backdrop {
+  background-color: transparent;
+  backdrop-filter: blur(0.2rem);
+}
+
+
+/* Hidden style */
 
 .hid {
   display: none;

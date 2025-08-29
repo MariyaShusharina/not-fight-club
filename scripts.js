@@ -21,12 +21,21 @@ errorDialog.classList.add('error-dialog');
   const errorText = document.createElement('p');
   errorText.textContent = 'Error occured!';
 
-  const closeErrorBtn = document.createElement('button');
-  closeErrorBtn.classList.add('btn');
-  closeErrorBtn.textContent = 'Close';
-  closeErrorBtn.addEventListener('click', closeDialog);
+  const dialogBtnsDiv = document.createElement('div');
+  dialogBtnsDiv.classList.add('dialg-btns-div');
+    const okErrorBtn = document.createElement('button');
+    okErrorBtn.classList.add('btn', 'hid');
+    okErrorBtn.textContent = 'OK';
+    okErrorBtn.addEventListener('click', deleteData);
+
+    const closeErrorBtn = document.createElement('button');
+    closeErrorBtn.classList.add('btn');
+    closeErrorBtn.textContent = 'Close';
+    closeErrorBtn.addEventListener('click', closeDialog);
+  dialogBtnsDiv.appendChild(okErrorBtn);
+  dialogBtnsDiv.appendChild(closeErrorBtn);
 errorDialog.appendChild(errorText);
-errorDialog.appendChild(closeErrorBtn);
+errorDialog.appendChild(dialogBtnsDiv);
 
 document.body.appendChild(errorDialog);
 
@@ -58,8 +67,10 @@ header.appendChild(headerDiv);
 const main = document.createElement('main');
   const mainDiv = document.createElement('div');
   mainDiv.classList.add('main-div');
-    const regPage = document.createElement('div');
+    const regPage = document.createElement('form');
+    regPage.setAttribute('action', 'javascript:void(0)');
     regPage.classList.add('reg-div');
+    regPage.setAttribute('name', 'charname');
       const regH2 = document.createElement('h2');
       regH2.textContent = 'Create your character';
 
@@ -69,13 +80,18 @@ const main = document.createElement('main');
 
       const regInput = document.createElement('input');
       regInput.setAttribute('id', 'charname');
+      regInput.setAttribute('name', 'charname');
       regInput.setAttribute('type', 'text');
+      regInput.setAttribute('autocomplete', 'on');
       regInput.setAttribute('minlength', 1);
       regInput.setAttribute('maxlength', 40);
 
       const regBtn = document.createElement('button');
+      regBtn.setAttribute('type', 'submit');
+      regBtn.setAttribute('name', 'charname');
       regBtn.classList.add('btn');
       regBtn.textContent = 'Create!';
+      regBtn.setAttribute('value', 'Create!');
       regBtn.addEventListener('click', createCharacter);
     regPage.appendChild(regH2);
     regPage.appendChild(regLabel);
@@ -112,26 +128,64 @@ const main = document.createElement('main');
       const settingsH2 = document.createElement('h2');
       settingsH2.textContent = 'Settings';
 
-      const playerName = document.createElement('p');
-      playerName.textContent = `Player name: ${data.charName}`;
+      const playerNameDiv = document.createElement('div');
+      playerNameDiv.classList.add('player-name-div');
+        const playerNameText = document.createElement('p');
+        playerNameText.classList.add('player-name-p');
+        playerNameText.textContent = 'Player name:';
+        const playerName = document.createElement('p');
+        playerName.classList.add('player-name-p');
+        playerName.textContent = data.charName;
+        const editBtn = document.createElement('button');
+        editBtn.classList.add('btn');
+        editBtn.textContent = 'Edit';
+        editBtn.addEventListener('click', editName);
 
-      const editBtn = document.createElement('button');
-      editBtn.classList.add('btn');
-      editBtn.textContent = 'Edit';
-      editBtn.addEventListener('click', editName);
+        const nameInputDiv = document.createElement('div');
+        nameInputDiv.classList.add('name-input-div', 'hid');
+          const nameInput = document.createElement('input');
+          nameInput.setAttribute('type', 'text');
+          nameInput.setAttribute('minlength', 1);
+          nameInput.setAttribute('maxlength', 40);
+          const doneBtn = document.createElement('button');
+          doneBtn.classList.add('btn');
+          doneBtn.textContent = 'Done';
+          doneBtn.addEventListener('click', changeName);
+        nameInputDiv.appendChild(nameInput);
+        nameInputDiv.appendChild(doneBtn);
+      playerNameDiv.appendChild(playerNameText);
+      playerNameDiv.appendChild(playerName);
+      playerNameDiv.appendChild(editBtn);
+      playerNameDiv.appendChild(nameInputDiv);
 
       const deleteBtn = document.createElement('button');
-      deleteBtn.classList.add('btn');
+      deleteBtn.classList.add('btn', 'delete-btn');
       deleteBtn.textContent = 'Delete Data';
-      deleteBtn.addEventListener('click', deleteData);
+      deleteBtn.addEventListener('click', showDeleteDialog);
     settingsPage.appendChild(settingsH2);
-    settingsPage.appendChild(playerName);
-    settingsPage.appendChild(editBtn);
+    settingsPage.appendChild(playerNameDiv);
     settingsPage.appendChild(deleteBtn);
+
+    const error404Page = document.createElement('div');
+    error404Page.classList.add('error-404-div', 'hid');
+      const error404h2 = document.createElement('h2');
+      error404h2.textContent = 'Error 404!';
+
+      const error404p = document.createElement('p');
+      error404p.textContent = 'Page not found.';
+
+      const error404btn = document.createElement('button');
+      error404btn.classList.add('btn');
+      error404btn.textContent = 'Go Home';
+      error404btn.addEventListener('click', loadRegPage);
+    error404Page.appendChild(error404h2);
+    error404Page.appendChild(error404p);
+    error404Page.appendChild(error404btn);
   mainDiv.appendChild(regPage);
   mainDiv.appendChild(battlePage);
   mainDiv.appendChild(profilePage);
   mainDiv.appendChild(settingsPage);
+  mainDiv.appendChild(error404Page);
 main.appendChild(mainDiv);
 
 const footer = document.createElement('footer');
@@ -188,33 +242,66 @@ if (data.charName !== '') {
 /* Navigation */
 
 function loadRegPage() {
-  regPage.classList.remove('hid');
-  battlePage.classList.add('hid');
-  profilePage.classList.add('hid');
-  settingsPage.classList.add('hid');
+  checkLS();
+  if (data.charName === '') {
+    regPage.classList.remove('hid');
+    regInput.value = '';
+    battlePage.classList.add('hid');
+    profilePage.classList.add('hid');
+    settingsPage.classList.add('hid');
+    error404Page.classList.add('hid');
+  }
 }
 
 function loadBattlePage() {
-  regPage.classList.add('hid');
-  battlePage.classList.remove('hid');
-  profilePage.classList.add('hid');
-  settingsPage.classList.add('hid');
+  checkLS();
+  if (data.charName !== '') {
+    regPage.classList.add('hid');
+    battlePage.classList.remove('hid');
+    profilePage.classList.add('hid');
+    settingsPage.classList.add('hid');
+  } else {
+    loadError404Page();
+  }
 }
 
 function loadProfilePage() {
-  regPage.classList.add('hid');
-  battlePage.classList.add('hid');
-  profilePage.classList.remove('hid');
-  settingsPage.classList.add('hid');
+  checkLS();
+  if (data.charName !== '') {
+    regPage.classList.add('hid');
+    battlePage.classList.add('hid');
+    profilePage.classList.remove('hid');
+    settingsPage.classList.add('hid');
+  } else {
+    loadError404Page();
+  }
 }
 
 function loadSettingsPage() {
-  regPage.classList.add('hid');
-  battlePage.classList.add('hid');
-  profilePage.classList.add('hid');
-  settingsPage.classList.remove('hid');
+  checkLS();
+  if (data.charName !== '') {
+    regPage.classList.add('hid');
+    battlePage.classList.add('hid');
+    profilePage.classList.add('hid');
+    settingsPage.classList.remove('hid');
+  
+    playerName.textContent = data.charName;
+    playerName.classListremove('hid');
+    nameInputDiv.classList.add('hid');
+  } else {
+    loadError404Page();
+  }
+}
 
-  playerName.textContent = `Player name: ${data.charName}`;
+function loadError404Page() {
+  checkLS();
+  if (data.charName === '') {
+    regPage.classList.add('hid');
+    battlePage.classList.add('hid');
+    profilePage.classList.add('hid');
+    settingsPage.classList.add('hid');
+    error404Page.classList.remove('hid');
+  }
 }
 
 /* Functionality */
@@ -232,10 +319,42 @@ function createCharacter() {
 
 function startBattle() {}
 
-function editName() {}
+function editName() {
+  playerName.classList.add('hid');
+  editBtn.classList.add('hid');
+  nameInputDiv.classList.remove('hid');
+  nameInput.value = data.charName;
+}
+
+function changeName() {
+  playerName.classList.remove('hid');
+  editBtn.classList.remove('hid');
+  nameInputDiv.classList.add('hid');
+
+  const val = nameInput.value.toString();
+  if (val.length > 1 && val.length < 41) {
+    data.charName = val;
+    writeLS(data);
+    playerName.textContent = data.charName;
+  } else {
+    throwDialogError('Error: Invalid Character Name!');
+  }
+}
+
+function showDeleteDialog() {
+  nameInputDiv.classList.add('hid');
+  nameInput.value = '';
+  playerName.classList.remove('hid');
+
+  throwDialogError('Delete character data?');
+  okErrorBtn.classList.remove('hid');
+}
 
 function deleteData() {
+  okErrorBtn.classList.add('hid');
   removeLS();
+  data.charName = '';
+  closeDialog()
   loadRegPage();
 }
 
@@ -261,6 +380,12 @@ function getLS() {
     data = JSON.parse(localStorage.getItem('NotGenshinClub'));
   } else {
     writeLS(data);
+  }
+}
+
+function checkLS() {
+  if (localStorage.NotGenshinClub) {
+    data = JSON.parse(localStorage.getItem('NotGenshinClub'));
   }
 }
 
