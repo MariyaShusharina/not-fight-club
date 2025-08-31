@@ -1,0 +1,515 @@
+
+/* Font */
+
+@font-face {
+	font-family: 'Genshin';
+	src: url('./assets/Genshin-Impact-Font.ttf');
+}
+
+/* General styles */
+
+:root {
+  --white: rgb(255 255 255);
+  --beige: rgb(255 238 204);
+  --light-brown: rgb(167 127 103);
+  --haselnut: rgb(134 93 68);
+  --brown: rgb(105 80 80);
+  --dark-brown: rgb(70 49 48);
+  --rust: rgb(152 64 27);
+  --red: rgb(185 0 0);
+  --green: rgb(2 160 60);
+  --grey: rgb(150, 150, 150);;
+}
+
+html {
+	scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--brown) var(--beige);
+  height: 100%;
+}
+
+body {
+	min-height: 100svh;
+  height: 100%;
+	margin: 0;
+	padding: 0;
+	
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+	background-color: var(--beige);
+	overflow-x: clip;
+}
+
+header, main, footer {
+  width: 100%;
+  display: flex;
+}
+
+a {
+  text-decoration: wavy;
+  color: var(--rust);
+  transition: color ease-in-out 0.4s;
+}
+
+a:hover {
+  color: var(--light-brown);
+}
+
+/* Header */
+
+header {}
+
+.header-div {
+  margin: 0.7rem;
+  padding: 0.8rem;
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+
+  border: solid 0.2rem var(--brown);
+  border-radius: 1rem;
+}
+
+h1 {
+  margin: 0;
+  margin-left: auto;
+  padding: 0;
+
+  font-size: 1.3rem;
+  text-align: center;
+}
+
+nav {
+  margin-left: auto;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.nav-btn {
+  cursor: pointer;
+
+  margin: 0.2rem;
+  padding: 0.2rem;
+
+  width: 2rem;
+  height: 2rem;
+
+  appearance: none;
+  border: none;
+
+  background-color: transparent;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: filter 0.3s ease-in-out,
+    transform 0.3s ease-in-out;
+  filter: brightness(0) saturate(100%) invert(32%) sepia(3%) saturate(3548%) hue-rotate(314deg) brightness(93%) contrast(82%);
+}
+
+.nav-btn:hover {
+  transform: scale(1.2);
+  filter: brightness(0) saturate(100%) invert(56%) sepia(8%) saturate(1589%) hue-rotate(339deg) brightness(93%) contrast(85%);
+}
+
+.battle {
+  background-image: url(./assets/icons/battle.png);
+}
+
+.profile {
+  background-image: url(./assets/icons/profile.png);
+}
+
+.settings {
+  background-image: url(./assets/icons/settings.png);
+  transition: filter 0.3s ease-in-out,
+    transform 0.5s ease-in-out;
+}
+
+.settings:hover {
+  transform: rotate(90deg);
+}
+
+/* Main */
+
+main {
+  height: 100%;
+  min-height: fit-content;
+}
+
+.main-div {
+  margin: 0 0.7rem;
+  padding: 0.8rem;
+
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: solid 0.2rem var(--brown);
+  border-radius: 1rem;
+}
+
+.column-div,
+.profile-div {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.arena-h2 {
+  margin: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.colliseum {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.char-card {
+  gap: 0.8rem;
+}
+
+.char-card p {
+  margin: 0;
+}
+
+.health-bar {
+  margin: 0.2rem 0;
+  width: 90%;
+  height: 0.36rem;
+
+  appearance: none;
+  clip-path: polygon(3% 0%, 97% 0%, 100% 50%, 97% 100%, 3% 100%, 0% 50%);
+
+  transition: all 0.4s ease-in-out;
+}
+
+.health-bar::-webkit-progress-bar {
+  background-color: var(--grey);
+}
+
+.health-bar::-webkit-progress-value {
+  background-color: var(--red);
+  transition: all 0.4s ease-in-out;
+}
+
+.health-bar[value^="2"]:not([value="2"])::-webkit-progress-value,
+.health-bar[value^="3"]:not([value="3"])::-webkit-progress-value,
+.health-bar[value^="4"]:not([value="4"])::-webkit-progress-value,
+.health-bar[value^="5"]:not([value="5"])::-webkit-progress-value,
+.health-bar[value^="6"]:not([value="6"])::-webkit-progress-value,
+.health-bar[value^="7"]:not([value="7"])::-webkit-progress-value,
+.health-bar[value^="8"]:not([value="8"])::-webkit-progress-value,
+.health-bar[value^="9"]:not([value="9"])::-webkit-progress-value,
+.health-bar[value^="10"]:not([value="10"])::-webkit-progress-value,
+.health-bar[value^="11"]:not([value="11"])::-webkit-progress-value,
+.health-bar[value^="12"]:not([value="12"])::-webkit-progress-value,
+.health-bar[value^="13"]:not([value="13"])::-webkit-progress-value,
+.health-bar[value^="14"]:not([value="14"])::-webkit-progress-value,
+.health-bar[value^="15"]:not([value="15"])::-webkit-progress-value,
+.health-bar[value^="16"]:not([value="16"])::-webkit-progress-value,
+.health-bar[value^="17"]:not([value="17"])::-webkit-progress-value,
+.health-bar[value^="18"]:not([value="18"])::-webkit-progress-value, /* halp... (T_T) */
+.health-bar[value^="19"]:not([value="19"])::-webkit-progress-value  {
+  background-color: var(--green);
+  transition: all 0.4s ease-in-out;
+}
+
+.flat-div {
+  margin: -0.4rem 0 0.4rem;
+
+  display: flex;
+  flex-direction: row;
+  gap: 0;
+}
+
+.enemy-health-bar {
+  margin: 0.2rem 0;
+  width: 90%;
+  height: 0.36rem;
+
+  appearance: none;
+  clip-path: polygon(3% 0%, 97% 0%, 100% 50%, 97% 100%, 3% 100%, 0% 50%);
+
+  transition: all 0.4s ease-in-out;
+}
+
+.enemy-health-bar::-webkit-progress-bar {
+  background-color: var(--grey);
+}
+
+.enemy-health-bar::-webkit-progress-value {
+  background-color: var(--red);
+  transition: all 0.4s ease-in-out;
+}
+
+.logs-wrap {
+  border-top: 0.1rem solid var(--light-brown);
+}
+
+.logs-div {
+  width: 100%;
+  height: 7rem;
+  
+  scrollbar-gutter: stable;
+  scrollbar-color: var(--brown) var(--beige);
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+}
+
+.logs-div p {
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+input[type='text'] {
+  padding: 0.1rem 0.2rem;
+  appearance: none;
+  border: 0.15rem solid var(--brown);
+  border-radius: 0.3rem;
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+}
+
+.btn {
+  cursor: pointer;
+
+  margin: 0.3rem;
+  padding: 0.5rem 0.7rem;
+
+  width: fit-content;
+
+  appearance: none;
+  border: none;
+  border-radius: 0.5rem;
+
+  font-family: 'Genshin', serif;
+  color: var(--white);
+  background-color: var(--brown);
+
+  transition: background-color 0.4s ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--light-brown);
+}
+
+.profile-div {
+  margin-bottom: 1rem;
+}
+
+.char-div {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.character-pic {
+  max-height: 300px;
+}
+
+.description-div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.description-div p {
+  margin: 0.3rem 0;
+}
+
+.results-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.wins-loses-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.wins {
+  color: var(--green);
+}
+
+.loses {
+  color: var(--red);
+}
+
+select,
+::picker(select) {
+  appearance: base-select;
+}
+
+select {
+  cursor: pointer;
+
+  margin: 0.2rem 0;
+  padding: 0.3rem 0.5rem;
+
+  min-width: 12rem;
+
+  border: 0.15rem solid var(--brown);
+  border-radius: 0.5rem;
+
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+  background-color: var(--white);
+}
+
+::picker(select) {
+  border: 0.15rem solid var(--brown);
+  border-radius: 0.5rem;
+}
+
+option {
+  padding: 0.2rem 0.5rem;
+  border-radius: 5rem;
+  transition: background-color 0.4s ease-in-out;
+}
+
+option:not([disabled]):hover {
+  background-color: var(--beige);
+}
+
+.player-name-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.player-name-p {
+  margin: 0.2rem 0;
+}
+
+.name-input-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.delete-btn {
+  margin: 1.2rem 0;
+  background-color: var(--rust);
+  transition: background-color 0.4s ease-in-out;
+}
+
+.delete-btn:hover {
+  background-color: var(--red);
+}
+
+/* Footer */
+
+footer {}
+
+.footer-div {
+  margin: 0.7rem;
+  padding: 0.7rem 1rem;
+
+  width: 100%;
+
+  border: solid 0.2rem var(--brown);
+  border-radius: 1rem;
+
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.github-credit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.github-credit p {
+  margin: 0.2rem;
+  font-size: 0.7rem;
+}
+
+.github-paragraph {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.rss-link {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+}
+
+.rss-link:hover {
+  transform: scale(1.15);
+}
+
+/* Error Dialog */
+
+.error-dialog[open] {
+  margin: auto;
+  padding: 1rem;
+
+  border: 0.2rem solid var(--brown);
+  border-radius: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-family: 'Genshin', serif;
+  color: var(--brown);
+
+  background-color: var(--beige);
+}
+
+.dialg-btns-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.error-dialog::backdrop {
+  background-color: transparent;
+  backdrop-filter: blur(0.2rem);
+}
+
+
+/* Hidden style */
+
+.hid {
+  display: none;
+}
