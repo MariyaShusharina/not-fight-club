@@ -1,11 +1,74 @@
 
 /* Variables */
 
+const hit = 10;
+const critHit = 15;
+const playerCrit= 0.7;
+
+const charBody = [
+  'Head',
+  'Neck',
+  'Body',
+  'Belly',
+  'Legs'
+];
+
+const enemyBody = [
+  'Head',
+  'Neck',
+  'Body',
+  'Belly',
+  'Legs/Tail'
+];
+
 const chars = [
   'Alhaitham',
   'Arlecchino',
   'Furina',
   'Zhongli'
+];
+
+const enemies = [
+  {
+    src: 'Dragon',
+    title: 'Dragon',
+    hp: 200,
+    attack: 2,
+    defence: 1,
+    crit: 0.5,
+  },
+  {
+    src: 'Frost_Operative',
+    title: 'Frost Operative',
+    hp: 120,
+    attack: 1,
+    defence: 2,
+    crit: 0.7,
+  },
+  {
+    src: 'Golden_Wolflord',
+    title: 'Golden Wolflord',
+    hp: 300,
+    attack: 1,
+    defence: 1,
+    crit: 0.3,
+  },
+  {
+    src: 'The_guy_who_calls_himself_Sanka',
+    title: 'The guy who calls himself Sanka',
+    hp: 100,
+    attack: 2,
+    defence: 1,
+    crit: 0.6,
+  },
+  {
+    src: 'Thunder_Manifestation',
+    title: 'Thunder Manifestation',
+    hp: 170,
+    attack: 3,
+    defence: 1,
+    crit: 0.5,
+  },
 ];
 
 /* Data Object */
@@ -15,6 +78,18 @@ let data = {
   avatar: 0,
   wins: 0,
   loses: 0,
+  inBattle: false,
+  char: {
+    hp: 100,
+    attack: -1,
+    defence: [-1, -1]
+  },
+  enemy: {
+    id: 0,
+    hp: 200,
+    attackChoice: [],
+    defenceChoice: [],
+  }
 };
 
 /* Generation of the Page content */
@@ -116,8 +191,86 @@ const main = document.createElement('main');
     const arenaPage = document.createElement('div');
     arenaPage.classList.add('column-div');
       const arenaH2 = document.createElement('h2');
+      arenaH2.classList.add('arena-h2');
       arenaH2.textContent = 'Arena';
+
+      const colliseum = document.createElement('div');
+      colliseum.classList.add('colliseum');
+        const charCard = document.createElement('div');
+        charCard.classList.add('column-div', 'char-card');
+          charTitle = document.createElement('p');
+          charTitle.textContent = data.charName;
+
+          const charPic = document.createElement('img');
+          charPic.classList.add('character-pic');
+          charPic.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
+          charPic.setAttribute('alt', 'Character Picture');
+
+          const charHPbar = document.createElement('progress');
+          charHPbar.classList.add('health-bar');
+          charHPbar.setAttribute('value', data.char.hp);
+          charHPbar.setAttribute('max', 100);
+
+          const charHPdiv = document.createElement('div');
+          charHPdiv.classList.add('flat-div');
+            const charHPnum = document.createElement('span');
+            charHPnum.textContent = data.char.hp;
+
+            const charHPfixed = document.createElement('span');
+            charHPfixed.textContent = '/100';
+          charHPdiv.appendChild(charHPnum);
+          charHPdiv.appendChild(charHPfixed);
+        charCard.appendChild(charTitle);
+        charCard.appendChild(charPic);
+        charCard.appendChild(charHPbar);
+        charCard.appendChild(charHPdiv);
+
+        const controls = document.createElement('div');
+
+        const enemyCard = document.createElement('div');
+        enemyCard.classList.add('column-div', 'char-card');
+          enemyTitle = document.createElement('p');
+          enemyTitle.textContent = enemies[data.enemy.id].title;
+
+          const enemyPic = document.createElement('img');
+          enemyPic.classList.add('character-pic');
+          enemyPic.setAttribute('src', `./assets/enemies/${enemies[data.enemy.id].src}.png`);
+          enemyPic.setAttribute('alt', 'Enemy Picture');
+
+          const enemyHPbar = document.createElement('progress');
+          enemyHPbar.classList.add('enemy-health-bar');
+          enemyHPbar.setAttribute('value', data.enemy.hp);
+          enemyHPbar.setAttribute('max', enemies[data.enemy.id].hp);
+
+          const enemyHPdiv = document.createElement('div');
+          enemyHPdiv.classList.add('flat-div');
+            const enemyHPnum = document.createElement('span');
+            enemyHPnum.textContent = data.enemy.hp;
+
+            const enemyHPfixed = document.createElement('span');
+            enemyHPfixed.textContent = `/${enemies[data.enemy.id].hp}`;
+          enemyHPdiv.appendChild(enemyHPnum);
+          enemyHPdiv.appendChild(enemyHPfixed);
+        enemyCard.appendChild(enemyTitle);
+        enemyCard.appendChild(enemyPic);
+        enemyCard.appendChild(enemyHPbar);
+        enemyCard.appendChild(enemyHPdiv);
+      colliseum.appendChild(charCard);
+      colliseum.appendChild(controls);
+      colliseum.appendChild(enemyCard);
+      
+      const logsWrap = document.createElement('div');
+      logsWrap.classList.add('column-div', 'logs-wrap');
+        const logsH3 = document.createElement('h3');
+        logsH3.textContent = 'Battle logs:';
+
+        const logsDiv = document.createElement('div');
+        logsDiv.classList.add('logs-div');
+      logsWrap.appendChild(logsH3);
+      logsWrap.appendChild(logsDiv);
     arenaPage.appendChild(arenaH2);
+    arenaPage.appendChild(colliseum);
+    arenaPage.appendChild(logsWrap);
 
     const profilePage = document.createElement('div');
     profilePage.classList.add('profile-div');
@@ -344,7 +497,9 @@ function loadArenaPage() {
   getLS();
   if (data.charName !== '') {
     mainDiv.textContent = '';
-    mainDiv.appendChild(arenaPage);;
+    mainDiv.appendChild(arenaPage);
+    charTitle.textContent = data.charName;
+    charPic.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
   } else {
     loadError404Page();
   }
@@ -402,7 +557,7 @@ function startBattle() {
   getLS();
   //check if battle started
   //restore battle or
-  //init battle and generate random enemy;
+  //init battle and generate random enemy
   loadArenaPage();
 }
 
@@ -412,6 +567,7 @@ function updateAvatar() {
     data.avatar = parseInt(val);
     writeLS(data);
     avatar.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
+    charPic.setAttribute('src', `./assets/chars/${chars[data.avatar]}.png`);
   }
 }
 
@@ -454,8 +610,20 @@ function deleteData() {
   data.avatar = 0;
   data.wins = 0;
   data.loses = 0;
-  closeDialog()
+  clearBattleData();
+  closeDialog();
   loadRegPage();
+}
+
+function clearBattleData() {
+  data.inBattle = false;
+  data.char.hp = 100;
+  data.char.attack = -1;
+  data.char.defence = [-1, -1];
+  data.enemy.id = 0;
+  data.enemy.hp = 150;
+  data.enemy.attackChoice = [];
+  data.enemy.defenceChoice = [];
 }
 
 /* Error Dialog functionality */
